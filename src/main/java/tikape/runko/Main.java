@@ -6,6 +6,7 @@ import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.AihealueDao;
 import tikape.runko.database.Database;
+import tikape.runko.database.KeskustelunavausDao;
 import tikape.runko.database.OpiskelijaDao;
 
 public class Main {
@@ -17,6 +18,10 @@ public class Main {
         AihealueDao aihealueDao = new AihealueDao(database);
         
         System.out.println(aihealueDao.findOne(1));
+        
+        //testejä (en pystynyt vielä testaamaan omalla läppärillä, kokeilen kampuksella sitten)
+        KeskustelunavausDao keskustelunavausDao = new KeskustelunavausDao(database);
+        System.out.println(keskustelunavausDao.findOne(2));
 
 //        Database database = new Database("jdbc:sqlite:opiskelijat.db");
 //        database.init();
