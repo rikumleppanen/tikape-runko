@@ -1,1 +1,58 @@
 
+//Taulujen luonti
+CREATE TABLE Aihealue(aiheID integer PRIMARY KEY, nimi varchar(30));
+CREATE TABLE Keskustelunavaus(avausID integer PRIMARY KEY,  kuvaus varchar(160), timestamp DATE DEFAULT (datetime('now','localtime')), aihe integer NULL, FOREIGN KEY(aihe) REFERENCES Aihealue(aiheID));
+CREATE TABLE Keskustelu(viestiID integer PRIMARY KEY, teksti varchar(160), timestamp DATE DEFAULT (datetime('now','localtime')), avaus integer NULL, FOREIGN KEY(avaus) REFERENCES Keskustelunavaus(avausID));
+
+//Koedataa 
+INSERT INTO Aihealue(nimi) VALUES ('lemmikit');
+INSERT INTO Aihealue(nimi) VALUES ('puutarhanhoito');
+INSERT INTO Aihealue(nimi) VALUES ('simulointi');
+
+
+INSERT INTO Keskustelunavaus(kuvaus, aihe) VALUES ('Kenellä on ollut lemmikkinä koira?', (SELECT aiheID FROM Aihealue WHERE nimi = 'lemmikit'));
+INSERT INTO Keskustelu(teksti, avaus) VALUES('Minulla! T.Riku', (SELECT avausID FROM Keskustelunavaus WHERE avausID = '1'));
+INSERT INTO Keskustelu(teksti, avaus) VALUES('Mutta ei ole enää. T.Riku', (SELECT avausID FROM Keskustelunavaus WHERE avausID = '1'));
+INSERT INTO Keskustelunavaus(kuvaus, aihe) VALUES ('Kenellä on ollut marsu lemmikkinä?', (SELECT aiheID FROM Aihealue WHERE nimi = 'lemmikit'));
+INSERT INTO Keskustelu(teksti, avaus) VALUES('Ei ole ollut marsua kylläkään, mutta pari lemmikkirottaa. T.Riku', (SELECT avausID FROM Keskustelunavaus WHERE avausID = '2'));
+INSERT INTO Keskustelunavaus(kuvaus, aihe) VALUES ('Kuka on kääntänyt perunapeltoa joskus?', (SELECT aiheID FROM Aihealue WHERE nimi = 'puutarhanhoito'));
+INSERT INTO Keskustelu(teksti, avaus) VALUES('Kyllä useastikin. T.Riku', (SELECT avausID FROM Keskustelunavaus WHERE avausID = '3'));
+
+
+//Käyttötapaus: Keskustelu
+
+SELECT kuvaus, timestamp FROM Keskustelunavaus WHERE avausID = '1';
+kuvaus|timestamp
+Kenellä on ollut lemmikkinä koira?|2017-02-08 18:45:23
+
+SELECT teksti, timestamp FROM Keskustelu WHERE avaus = '1';
+Minulla! T.Riku|2017-02-08 18:45:40
+Mutta ei ole enää. T.Riku|2017-02-08 18:45:52
+
+//Käyttötapaus: Listaus Keskustelunavauksista viestien lukumäärineen ja tuoreimman viestin aikaleimoineen:
+
+SELECT ka.kuvaus, taulu.lkm, taulu.aikaleima
+FROM Keskustelunavaus ka JOIN (
+    SELECT kas.avausID as ID, COUNT(ku.viestiID) as lkm, MAX(ku.timestamp) as aikaleima
+    FROM Aihealue a, Keskustelunavaus kas, Keskustelu ku
+    WHERE kas.avausID = ku.avaus
+    AND a.aiheID = kas.aihe
+    AND a.aiheID = '1'
+    GROUP BY kas.avausID) taulu
+    ON ka.avausID = taulu.ID
+ORDER BY ka.timestamp DESC
+LIMIT(10);
+
+//Käyttötapaus: Listaus Aihealueista viestien lukumäärineen ja tuoreimman viestin aikaleimoineen:
+
+SELECT a.nimi, taulu.lkm, taulu.aikaleima
+FROM Aihealue a JOIN (
+    SELECT kas.aihe as ID, COUNT(ku.viestiID) as lkm, MAX(ku.timestamp) as aikaleima
+    FROM Keskustelunavaus kas, Keskustelu ku
+    WHERE kas.avausID = ku.avaus
+    GROUP BY kas.aihe) taulu
+    ON a.aiheID = taulu.ID
+ORDER BY a.nimi ASC;
+
+
+
