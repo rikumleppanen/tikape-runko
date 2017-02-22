@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Keskustelunavaus;
 
-public class KeskustelunavausDao implements Dao <Keskustelunavaus, Integer>{
+public class KeskustelunavausDao implements Dao<Keskustelunavaus, Integer> {
 
     private Database database;
 
@@ -27,12 +27,13 @@ public class KeskustelunavausDao implements Dao <Keskustelunavaus, Integer>{
         if (!hasOne) {
             return null;
         }
-        //timestamp?
-        Integer id = rs.getInt("avausID");
-        String kuvaus = rs.getString("kuvaus");
-        Integer aihe = rs.getInt("aihe");
 
-        Keskustelunavaus o = new Keskustelunavaus(id, kuvaus, aihe);
+        int id = rs.getInt("avausID");
+        String kuvaus = rs.getString("kuvaus");
+        int aiheID = rs.getInt("aihe");
+        String time = rs.getString("timestamp");
+
+        Keskustelunavaus o = new Keskustelunavaus(id, kuvaus, time, aiheID);
 
         rs.close();
         stmt.close();
@@ -50,12 +51,40 @@ public class KeskustelunavausDao implements Dao <Keskustelunavaus, Integer>{
         ResultSet rs = stmt.executeQuery();
         List<Keskustelunavaus> avaukset = new ArrayList<>();
         while (rs.next()) {
-            //timestamp?
-            Integer id = rs.getInt("id");
+            int id = rs.getInt("avausID");
             String kuvaus = rs.getString("kuvaus");
-            Integer aihe = rs.getInt("aihe");
+            int aiheID = rs.getInt("aihe");
+            String time = rs.getString("timestamp");
 
-            avaukset.add(new Keskustelunavaus(id, kuvaus, aihe));
+            avaukset.add(new Keskustelunavaus(id, kuvaus, time, aiheID));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return avaukset;
+    }
+
+    //onko tarpeen?
+    public List<Keskustelunavaus> findAll(int key) throws SQLException {
+
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelunavaus WHERE aihe = ?");
+        stmt.setObject(1, key);
+
+        ResultSet rs = stmt.executeQuery();
+
+        List<Keskustelunavaus> avaukset = new ArrayList<>();
+        while (rs.next()) {
+            int id = rs.getInt("avausID");
+            String kuvaus = rs.getString("kuvaus");
+            int aiheID = rs.getInt("aihe");
+            String time = rs.getString("timestamp");
+
+            if (aiheID == key) {
+                avaukset.add(new Keskustelunavaus(id, kuvaus, time, aiheID));
+            }
         }
 
         rs.close();
@@ -67,8 +96,14 @@ public class KeskustelunavausDao implements Dao <Keskustelunavaus, Integer>{
 
     @Override
     public void delete(Integer key) throws SQLException {
-        // ei toteutettu
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("DELETE * FROM Keskustelunavaus WHERE avausID = ?");
+        stmt.setObject(1, key);
+        ResultSet rs = stmt.executeQuery();
+
+        rs.close();
+        stmt.close();
+        connection.close();
     }
 
 }
-

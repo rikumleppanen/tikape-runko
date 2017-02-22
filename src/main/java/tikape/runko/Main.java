@@ -12,6 +12,7 @@ import tikape.runko.database.KeskusteluDao;
 import tikape.runko.database.KeskustelunavausDao;
 import tikape.runko.database.OpiskelijaDao;
 import tikape.runko.domain.Keskustelu;
+import tikape.runko.domain.Keskustelunavaus;
 
 public class Main {
     
@@ -42,9 +43,19 @@ public class Main {
         System.out.println(aihealueDao.findOne(1));
         System.out.println("");
 
-        //testejä (en pystynyt vielä testaamaan omalla läppärillä, kokeilen kampuksella sitten)
+//testejä Keskustelunavauksille      
         KeskustelunavausDao keskustelunavausDao = new KeskustelunavausDao(database);
-        System.out.println(keskustelunavausDao.findOne(2));
+        System.out.println(keskustelunavausDao.findOne(1));
+        System.out.println("---");
+        for (Keskustelunavaus ka : keskustelunavausDao.findAll()) {
+            System.out.println(ka);
+        }
+        System.out.println("---");
+
+        //kun haetaan tietyn aiheen kaikki keskustelunavaukset
+        for (Keskustelunavaus ka : keskustelunavausDao.findAll(1)) {
+            System.out.println(ka);
+        }
         
         System.out.println("");
         System.out.println(keskusteluDao.findOne(1));

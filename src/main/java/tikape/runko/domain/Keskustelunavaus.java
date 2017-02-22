@@ -2,23 +2,21 @@ package tikape.runko.domain;
 
 public class Keskustelunavaus {
 
-    private Integer id;
+    private int id;
     private String kuvaus;
-    private Integer aihe;
+    private int aiheID;
+    private String time;
 
     //timestamp?
-    public Keskustelunavaus(Integer id, String kuvaus, Integer aihe) {
+    public Keskustelunavaus(int id, String kuvaus, String time, int aiheID) {
         this.id = id;
         this.kuvaus = kuvaus;
-        this.aihe = aihe;
+        this.aiheID = aiheID;
+        this.time = time;
     }
 
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getKuvaus() {
@@ -28,17 +26,25 @@ public class Keskustelunavaus {
     public void setKuvaus(String kuvaus) {
         this.kuvaus = kuvaus;
     }
-    
-    public Integer getAihe(){
-        return aihe;
+
+    public String getTime() {
+        return time;
     }
-    
-    public void setAihe(Integer aihe){
-        this.aihe = aihe;
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public Integer getAiheID() {
+        return aiheID;
+    }
+
+    public void setAiheID(Integer aiheID) {
+        this.aiheID = aiheID;
     }
 
     @Override
     public String toString() {
-        return "(" + this.id + ") " + this.kuvaus + " - Aihealue: " + this.aihe;
+        return "(" + this.id + ") " + this.kuvaus + " (" + this.time + ") - Aihealue: " + this.aiheID;
     }
 }
