@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Aihealue;
 
-public class AihealueDao implements Dao <Aihealue, Integer>{
+public class AihealueDao implements Dao<Aihealue, Integer> {
 
     private Database database;
 
@@ -60,6 +60,26 @@ public class AihealueDao implements Dao <Aihealue, Integer>{
         connection.close();
 
         return aihealueet;
+    }
+
+    public int size() throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(aiheID) as lkm FROM Aihealue");
+        ResultSet rs = stmt.executeQuery();
+        Integer luku = rs.getInt("lkm");
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return luku;
+    }
+
+    public void add(String teksti) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Aihealue(nimi) VALUES ('" + teksti + "')");
+        stmt.executeUpdate();
+        stmt.close();
+        connection.close();
     }
 
     @Override
