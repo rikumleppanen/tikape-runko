@@ -1,6 +1,7 @@
 package tikape.runko.database;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -92,6 +93,15 @@ public class KeskustelunavausDao implements Dao<Keskustelunavaus, Integer> {
         connection.close();
 
         return avaukset;
+    }
+
+    public void add(String kuvaus, String aiheID) throws SQLException {
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Keskustelunavaus (kuvaus, aiheID) "
+                + "VALUES ('" + kuvaus + "', " + aiheID + ")");
+        stmt.execute();
+
+        conn.close();
     }
 
     @Override

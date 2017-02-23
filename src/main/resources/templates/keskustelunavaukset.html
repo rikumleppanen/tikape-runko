@@ -1,0 +1,26 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Otsikko</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <h2>Keskustelunavaukset aiheesta: <span th:text="${aihe}">aihealue</span></h2>
+
+        <ul>        
+            <li th:each="keskustelunavaus : ${avaukset}">
+                <a th:text="${keskustelunavaus.kuvaus}">kuvaus</a>               
+            </li>
+        </ul>
+
+        <h3>Lisää uusi keskustelunavaus</h3>
+        <form method="POST">
+            Keskustelun kuvaus: <br/>
+            <input type="text" name="kuvaus"/>
+            <input type="submit" value="Lisää"/>
+        </form>
+
+    </body>
+</html>

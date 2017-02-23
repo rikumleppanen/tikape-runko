@@ -15,48 +15,59 @@ import tikape.runko.domain.Keskustelu;
 import tikape.runko.domain.Keskustelunavaus;
 
 public class Main {
-    
+
     public static void main(String[] args) throws Exception {
         Database database = new Database("jdbc:sqlite:kanta.db");
         database.init();
-        
+
         AihealueDao aihealueDao = new AihealueDao(database);
+        KeskustelunavausDao keskustelunavausDao = new KeskustelunavausDao(database);
         KeskusteluDao keskusteluDao = new KeskusteluDao(database);
         List<String> list = new ArrayList<>();
-        
+
         for (int i = 1; i <= aihealueDao.size(); i++) {
             list.add(aihealueDao.findOne(i).toString());
         }
-        
+
         get("/", (req, res) -> {
             HashMap<String, Object> data = new HashMap<>();
-            
+
             if (req.queryParams().contains("content")) {
                 list.add(req.queryParams("content"));
                 aihealueDao.add(req.queryParams("content"));
             }
-            
+
             data.put("list", list);
             return new ModelAndView(data, "index");
         }, new ThymeleafTemplateEngine());
-        
+
+        //kaikki keskustelunavaukset aiheista piittaamatta. Ei välttämättä tarpeen?
+        get("/keskustelunavaukset", (req, res) -> {
+            HashMap<String, Object> data = new HashMap<>();
+
+            data.put("avaukset", keskustelunavausDao.findAll());
+
+            return new ModelAndView(data, "keskustelunavaukset");
+        }, new ThymeleafTemplateEngine());
+
+        //Listaa keskustelunavaukset aiheittain
+        get("/aihealueet/:id", (req, res) -> {
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("aihe", aihealueDao.findOne(Integer.parseInt(req.params(":id"))).getNimi());
+
+            data.put("avaukset", keskustelunavausDao.findAll(Integer.parseInt(req.params(":id"))));
+
+            return new ModelAndView(data, "keskustelunavaukset");
+        }, new ThymeleafTemplateEngine());
+
+        //ei toimi koska keskustelunavausDaon add-metodi vaiheessa (?)
+        post("/aihealueet/:id", (req, res) -> {
+            keskustelunavausDao.add(req.params("kuvaus"), req.params(":id"));
+            res.redirect("/aihealueet/"+ req.params(":id"));
+            return "ok";
+        });
+
         System.out.println(aihealueDao.findOne(1));
-        System.out.println("");
-
-//testejä Keskustelunavauksille      
-        KeskustelunavausDao keskustelunavausDao = new KeskustelunavausDao(database);
-        System.out.println(keskustelunavausDao.findOne(1));
-        System.out.println("---");
-        for (Keskustelunavaus ka : keskustelunavausDao.findAll()) {
-            System.out.println(ka);
-        }
-        System.out.println("---");
-
-        //kun haetaan tietyn aiheen kaikki keskustelunavaukset
-        for (Keskustelunavaus ka : keskustelunavausDao.findAll(1)) {
-            System.out.println(ka);
-        }
-        
         System.out.println("");
         System.out.println(keskusteluDao.findOne(1));
         for (Keskustelu k : keskusteluDao.findAll()) {
