@@ -14,4 +14,5 @@ Päivä | Tunnit | Henkilö | Kuvaus
 20.2.2017 | 2 | Suvi | Askel 2 suunnittelua ryhmänä
 20.2.2017 | 1 | Suvi | keskustelunavausluokkien suunnittelua ja tekoa
 22.2.2017 | 2 | Suvi | tehtyyn perehtymistä, testailua ja keskustelunavausjuttujen lisäilyä
+23.2.2017 | 3 | Suvi | keskustelunavausluokkien muokkaamista, tehtyyn perehtymistä ja html-pohjaa
 ... | ... | ... | ...
