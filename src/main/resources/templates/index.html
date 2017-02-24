@@ -10,13 +10,14 @@
         <h1>Aihealueet</h1>
 
         <ul>
-            <li th:each="alkio : ${list}">
-                <span th:text="${alkio}">1</span>
+            <li th:each="aihe: ${aihealueet}">
+                <a th:href="@{~/aihealueet/{id}(id=${aihe.id})}" 
+                   th:text="${aihe.nimi}">aihealue</a>
             </li>
         </ul>
-        <form action="/" method="GET">
+        <form method="POST">
             <h2>Lisää aihealue</h2>
-            <input type="text" name="content"/>
+            <input type="text" name="aihealue"/>
             <input type="submit" value = "Lisää"/>
         </form> 
     </body>

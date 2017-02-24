@@ -1,6 +1,7 @@
 package tikape.runko.database;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +29,7 @@ public class AihealueDao implements Dao<Aihealue, Integer> {
             return null;
         }
 
-        Integer id = rs.getInt("AiheID");
+        Integer id = rs.getInt("aiheid");
         String nimi = rs.getString("nimi");
 
         Aihealue o = new Aihealue(id, nimi);
@@ -49,7 +50,7 @@ public class AihealueDao implements Dao<Aihealue, Integer> {
         ResultSet rs = stmt.executeQuery();
         List<Aihealue> aihealueet = new ArrayList<>();
         while (rs.next()) {
-            Integer id = rs.getInt("id");
+            Integer id = rs.getInt("aiheid");
             String nimi = rs.getString("nimi");
 
             aihealueet.add(new Aihealue(id, nimi));
@@ -74,12 +75,15 @@ public class AihealueDao implements Dao<Aihealue, Integer> {
         return luku;
     }
 
-    public void add(String teksti) throws SQLException {
+    public void lisaa(String aihe) throws Exception {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Aihealue(nimi) VALUES ('" + teksti + "')");
-        stmt.executeUpdate();
-        stmt.close();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Aihealue (nimi) "
+                + "VALUES (?)");
+        stmt.setString(1, aihe);
+        stmt.execute();
+
         connection.close();
+
     }
 
     @Override
