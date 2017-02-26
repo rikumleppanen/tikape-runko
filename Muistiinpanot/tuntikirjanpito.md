@@ -8,6 +8,10 @@ Päivä | Tunnit | Henkilö | Kuvaus
 20.2.2017 | 2 | Riku | Tikape-rungon, Githubin ja Aihealue-datan sovittamista runkoon
 22.2.2017 | 2 | Riku | Index-sivulle Aihealueiden listaus + lisäysnappi + lisäyksen kantaan vienti
 24.2.2017 | 2 | Riku | Aihealueista linkitys Keskustelunavauksiin
+5.2.2017 | 1 | Jaakko | perehtymistä tehtävään
+6.2.2017 | 1 | Jaakko | suunnittelua, tapaaminen
+8.2.2017 | 1.5 | Jaakko | CREATE TABLE:jä
+20.2.2017 | 2 | Jaakko | Askel 2 suunnittelua ryhmänä
 21.2.2017 | 1 | Jaakko | Keskustelu ja KeskusteluDao
 5.2.2017 | 1 | Suvi | perehtymistä ja suunnittelua
 6.2.2017 | 1 | Suvi | suunnittelua + tapaaminen
