@@ -5,11 +5,13 @@ public class Keskustelu {
     private int avausID;
     private String viesti;
     private String time;
-    public Keskustelu(int id, String viesti, String time, int avausID){
+    private String nimimerkki;
+    public Keskustelu(int id, String viesti, String nimimerkki, String time, int avausID){
         this.id=id;
         this.avausID=avausID;
         this.viesti=viesti;
         this.time=time;
+        this.nimimerkki=nimimerkki;
     }
 
     public int getId() {
@@ -28,8 +30,12 @@ public class Keskustelu {
         return time;
     }
     
+    public String getNimimerkki(){
+        return this.nimimerkki;
+    }
+    
     @Override
     public String toString(){
-        return "("+this.id+" --- "+this.time+")\n"+this.viesti;
+        return this.nimimerkki+" - "+this.time+": "+this.viesti;
     }
 }

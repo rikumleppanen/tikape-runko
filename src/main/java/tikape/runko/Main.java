@@ -109,17 +109,36 @@ public class Main {
 //        }, new ThymeleafTemplateEngine());
         //ei toimi koska keskustelunavausDaon add-metodi vaiheessa (?)
         post("/aihealueet/:id", (req, res) -> {
-            keskustelunavausDao.add(req.params("kuvaus"), req.params(":id"));
+            keskustelunavausDao.add(req.queryParams("kuvaus"), req.params(":id"));
             res.redirect("/aihealueet/" + req.params(":id"));
             return "ok";
         });
+        
+        
+        Spark.get("/keskustelu/:id", (req, res) -> {
+            
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("viestit", keskusteluDao.findAllWithKey(Integer.parseInt(req.params(":id"))));
 
-        System.out.println(aihealueDao.findOne(1));
-        System.out.println("");
-        System.out.println(keskusteluDao.findOne(1));
-        for (Keskustelu k : keskusteluDao.findAll()) {
-            System.out.println(k);
-        }
+            data.put("alue", aihealueDao.findOne(Integer.parseInt(req.params(":id"))));
+            
+            data.put("keskustelunavaus", keskustelunavausDao.findOne(Integer.parseInt(req.params(":id"))));
+
+            return new ModelAndView(data, "keskustelu");
+        }, new ThymeleafTemplateEngine());
+        
+        Spark.post("/keskustelu/:id", (req, res) -> {
+            keskusteluDao.add(req.queryParams("viesti"), req.queryParams("nimimerkki"), req.params(":id"));
+            res.redirect("/keskustelu/" + req.params(":id"));
+            return "ok";
+        });
+        
+//        System.out.println(aihealueDao.findOne(1));
+//        System.out.println("");
+//        System.out.println(keskusteluDao.findOne(1));
+//        for (Keskustelu k : keskusteluDao.findAll()) {
+//            System.out.println(k);
+//        }
 
 //        Database database = new Database("jdbc:sqlite:opiskelijat.db");
 //        database.init();

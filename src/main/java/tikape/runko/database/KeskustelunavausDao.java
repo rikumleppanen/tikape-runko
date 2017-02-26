@@ -97,7 +97,7 @@ public class KeskustelunavausDao implements Dao<Keskustelunavaus, Integer> {
 
     public void add(String kuvaus, String aiheID) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Keskustelunavaus (kuvaus, aiheID) "
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Keskustelunavaus (kuvaus, aihe) "
                 + "VALUES ('" + kuvaus + "', " + aiheID + ")");
         stmt.execute();
 
@@ -107,7 +107,7 @@ public class KeskustelunavausDao implements Dao<Keskustelunavaus, Integer> {
     @Override
     public void delete(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("DELETE * FROM Keskustelunavaus WHERE avausID = ?");
+        PreparedStatement stmt = connection.prepareStatement("DELETE FROM Keskustelunavaus WHERE avausID = ?");
         stmt.setObject(1, key);
         ResultSet rs = stmt.executeQuery();
 

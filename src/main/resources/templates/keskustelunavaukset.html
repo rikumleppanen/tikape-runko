@@ -11,7 +11,8 @@
 
         <ul>        
             <li th:each="keskustelunavaus : ${avaukset}">
-                <a th:text="${keskustelunavaus.kuvaus}">kuvaus</a>               
+                 <a th:href="@{~/keskustelu/{id}(id=${keskustelunavaus.id})}" 
+                   th:text="${keskustelunavaus.kuvaus}">kuvaus</a>             
             </li>
         </ul>
 
