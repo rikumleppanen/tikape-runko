@@ -2,7 +2,7 @@
 //Taulujen luonti
 CREATE TABLE Aihealue(aiheID integer PRIMARY KEY, nimi varchar(30));
 CREATE TABLE Keskustelunavaus(avausID integer PRIMARY KEY,  kuvaus varchar(160), timestamp DATE DEFAULT (datetime('now','localtime')), aihe integer NULL, FOREIGN KEY(aihe) REFERENCES Aihealue(aiheID));
-CREATE TABLE Keskustelu(viestiID integer PRIMARY KEY, teksti varchar(160), timestamp DATE DEFAULT (datetime('now','localtime')), avaus integer NULL, FOREIGN KEY(avaus) REFERENCES Keskustelunavaus(avausID));
+CREATE TABLE Keskustelu(viestiID integer PRIMARY KEY, teksti varchar(160), nimimerkki varchar(24), timestamp DATE DEFAULT (datetime('now','localtime')), avaus integer NULL, FOREIGN KEY(avaus) REFERENCES Keskustelunavaus(avausID));
 
 //Koedataa 
 INSERT INTO Aihealue(nimi) VALUES ('lemmikit');
