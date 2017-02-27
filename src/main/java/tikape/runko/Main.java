@@ -18,7 +18,16 @@ import tikape.runko.domain.Keskustelunavaus;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Database database = new Database("jdbc:sqlite:kanta.db");
+        // asetetaan portti jos heroku antaa PORT-ympäristömuuttujan
+        if (System.getenv("PORT") != null) {
+            port(Integer.valueOf(System.getenv("PORT")));
+        }
+
+        String jdbcOsoite = "jdbc:sqlite:kanta.db";
+        if (System.getenv("DATABASE_URL") != null) {
+            jdbcOsoite = System.getenv("DATABASE_URL");
+        }
+        Database database = new Database(jdbcOsoite);
         database.init();
 
         AihealueDao aihealueDao = new AihealueDao(database);
@@ -33,14 +42,14 @@ public class Main {
             res.redirect("/aihealueet");
             return "ok";
         });
-        
+
         Spark.get("/aihealueet", (req, res) -> {
             HashMap data = new HashMap<>();
             data.put("aihealueet", aihealueDao.findAll());
 
             return new ModelAndView(data, "index");
         }, new ThymeleafTemplateEngine());
-        
+
         Spark.post("/aihealueet", (req, res) -> {
             aihealueDao.lisaa(req.queryParams("aihealue"));
             res.redirect("/");
@@ -53,9 +62,6 @@ public class Main {
 //
 //            return new ModelAndView(data, "aihealue");
 //        }, new ThymeleafTemplateEngine());
-
-
-
         Spark.post("/aihealueet", (req, res) -> {
             aihealueDao.lisaa(req.queryParams("aihealue"));
             res.redirect("/");
@@ -80,7 +86,6 @@ public class Main {
 //            data.put("list", list);
 //            return new ModelAndView(data, "index");
 //        }, new ThymeleafTemplateEngine());
-
         //kaikki keskustelunavaukset aiheista piittaamatta. Ei välttämättä tarpeen?
         get("/keskustelunavaukset", (req, res) -> {
             HashMap<String, Object> data = new HashMap<>();
@@ -92,7 +97,7 @@ public class Main {
 
         //Listaa keskustelunavaukset aiheittain
         Spark.get("/aihealueet/:id", (req, res) -> {
-            
+
             HashMap<String, Object> data = new HashMap<>();
             data.put("aihe", aihealueDao.findOne(Integer.parseInt(req.params(":id"))).getNimi());
 
@@ -100,7 +105,7 @@ public class Main {
 
             return new ModelAndView(data, "keskustelunavaukset");
         }, new ThymeleafTemplateEngine());
-        
+
 //        Spark.get("/aihealueet/:id", (req, res) -> {
 //            HashMap data = new HashMap<>();
 //            //data.put("aihealueet", aihealueDao.findOne(Integer.parseInt(req.params(":id"))));
@@ -113,33 +118,31 @@ public class Main {
             res.redirect("/aihealueet/" + req.params(":id"));
             return "ok";
         });
-        
-        
+
         Spark.get("/keskustelu/:id", (req, res) -> {
-            
+
             HashMap<String, Object> data = new HashMap<>();
             data.put("viestit", keskusteluDao.findAllWithKey(Integer.parseInt(req.params(":id"))));
 
             data.put("alue", aihealueDao.findOne(Integer.parseInt(req.params(":id"))));
-            
+
             data.put("keskustelunavaus", keskustelunavausDao.findOne(Integer.parseInt(req.params(":id"))));
 
             return new ModelAndView(data, "keskustelu");
         }, new ThymeleafTemplateEngine());
-        
+
         Spark.post("/keskustelu/:id", (req, res) -> {
             keskusteluDao.add(req.queryParams("viesti"), req.queryParams("nimimerkki"), req.params(":id"));
             res.redirect("/keskustelu/" + req.params(":id"));
             return "ok";
         });
-        
+
 //        System.out.println(aihealueDao.findOne(1));
 //        System.out.println("");
 //        System.out.println(keskusteluDao.findOne(1));
 //        for (Keskustelu k : keskusteluDao.findAll()) {
 //            System.out.println(k);
 //        }
-
 //        Database database = new Database("jdbc:sqlite:opiskelijat.db");
 //        database.init();
 //
