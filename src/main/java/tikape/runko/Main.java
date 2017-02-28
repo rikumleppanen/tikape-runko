@@ -124,7 +124,7 @@ public class Main {
             HashMap<String, Object> data = new HashMap<>();
             data.put("viestit", keskusteluDao.findAllWithKey(Integer.parseInt(req.params(":id"))));
 
-            data.put("alue", aihealueDao.findOne(Integer.parseInt(req.params(":id"))));
+            data.put("alue", aihealueDao.findOne(keskustelunavausDao.findOne(Integer.parseInt(req.params(":id"))).getAiheID()));
 
             data.put("keskustelunavaus", keskustelunavausDao.findOne(Integer.parseInt(req.params(":id"))));
 
