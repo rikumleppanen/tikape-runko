@@ -32,7 +32,7 @@ Mutta ei ole enää. T.Riku|2017-02-08 18:45:52
 //Käyttötapaus: Listaus Keskustelunavauksista viestien lukumäärineen ja tuoreimman viestin aikaleimoineen:
 
 SELECT ka.kuvaus, taulu.lkm, taulu.aikaleima
-FROM Keskustelunavaus ka JOIN (
+FROM Keskustelunavaus ka LEFT JOIN (
     SELECT kas.avausID as ID, COUNT(ku.viestiID) as lkm, MAX(ku.timestamp) as aikaleima
     FROM Aihealue a, Keskustelunavaus kas, Keskustelu ku
     WHERE kas.avausID = ku.avaus
@@ -46,7 +46,7 @@ LIMIT(10);
 //Käyttötapaus: Listaus Aihealueista viestien lukumäärineen ja tuoreimman viestin aikaleimoineen:
 
 SELECT a.nimi, taulu.lkm, taulu.aikaleima
-FROM Aihealue a JOIN (
+FROM Aihealue a LEFT JOIN (
     SELECT kas.aihe as ID, COUNT(ku.viestiID) as lkm, MAX(ku.timestamp) as aikaleima
     FROM Keskustelunavaus kas, Keskustelu ku
     WHERE kas.avausID = ku.avaus
