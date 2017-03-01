@@ -63,6 +63,38 @@ public class AihealueDao implements Dao<Aihealue, Integer> {
         return aihealueet;
     }
 
+    public List<Aihealue> haeKaikki() throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT a.aiheid, a.nimi, taulu.lkm, taulu.aikaleima\n"
+                + "FROM Aihealue a LEFT JOIN (\n"
+                + "    SELECT kas.aihe as ID, COUNT(ku.viestiID) as lkm, MAX(ku.timestamp) as aikaleima\n"
+                + "    FROM Keskustelunavaus kas, Keskustelu ku\n"
+                + "    WHERE kas.avausID = ku.avaus\n"
+                + "    GROUP BY kas.aihe) taulu\n"
+                + "    ON a.aiheID = taulu.ID\n"
+                + "ORDER BY a.nimi ASC;");
+
+        ResultSet rs = stmt.executeQuery();
+        List<Aihealue> aihealueet = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("aiheid");
+            String nimi = rs.getString("nimi");
+            Integer lkm = rs.getInt("lkm");
+            String time = rs.getString("aikaleima");
+
+            if (lkm == null) {
+                aihealueet.add(new Aihealue(id, nimi, null, null));
+            }
+            aihealueet.add(new Aihealue(id, nimi, lkm, time));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return aihealueet;
+    }
+
     public int size() throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(aiheID) as lkm FROM Aihealue");

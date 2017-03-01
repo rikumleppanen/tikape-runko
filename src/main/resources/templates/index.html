@@ -8,13 +8,21 @@
 
     <body>
         <h1>Aihealueet</h1>
+        <table>
+            <tr>
+                <th>Alue</th>
+                <th>Viestejä yhteensä</th>
+                <th>Tuorein viesti</th>
+            </tr>
+            <tr th:each="aihe: ${aihealueet}">
+                <td><a th:href="@{~/aihealueet/{id}(id=${aihe.id})}" 
+                       th:text="${aihe.nimi}">aihealue</a></td>
+                <td th:text="${aihe.lkm}">lkm</td>
+                <td th:text="${aihe.time}">aika</td>
+            </tr>
+        </table>
 
-        <ul>
-            <li th:each="aihe: ${aihealueet}">
-                <a th:href="@{~/aihealueet/{id}(id=${aihe.id})}" 
-                   th:text="${aihe.nimi}">aihealue</a>
-            </li>
-        </ul>
+
         <form method="POST">
             <h2>Lisää aihealue</h2>
             <input type="text" name="aihealue"/>

@@ -35,9 +35,6 @@ public class Main {
         KeskusteluDao keskusteluDao = new KeskusteluDao(database);
         List<String> list = new ArrayList<>();
 
-//        for (int i = 1; i <= aihealueDao.size(); i++) {
-//            list.add(aihealueDao.findOne(i).toString());
-//        }
         Spark.get("/", (req, res) -> {
             res.redirect("/aihealueet");
             return "ok";
@@ -45,7 +42,7 @@ public class Main {
 
         Spark.get("/aihealueet", (req, res) -> {
             HashMap data = new HashMap<>();
-            data.put("aihealueet", aihealueDao.findAll());
+            data.put("aihealueet", aihealueDao.haeKaikki());
 
             return new ModelAndView(data, "index");
         }, new ThymeleafTemplateEngine());
@@ -56,37 +53,6 @@ public class Main {
             return "ok";
         });
 
-//        Spark.get("/aihealueet", (req, res) -> {
-//            HashMap data = new HashMap<>();
-//            data.put("aihealueet", aihealueDao.findAll());
-//
-//            return new ModelAndView(data, "aihealue");
-//        }, new ThymeleafTemplateEngine());
-        Spark.post("/aihealueet", (req, res) -> {
-            aihealueDao.lisaa(req.queryParams("aihealue"));
-            res.redirect("/");
-            return "ok";
-        });
-
-//        Spark.post("/aihealueet/:id", (req, res) -> {
-//            todoDao.lisaa(req.params(":id"),
-//                    req.queryParams("tehtava"));
-//
-//            res.redirect("/tekijat/" + req.params(":id"));
-//            return "ok";
-//        });
-//        get("/", (req, res) -> {
-//            HashMap<String, Object> data = new HashMap<>();
-//
-//            if (req.queryParams().contains("content")) {
-//                list.add(req.queryParams("content"));
-//                aihealueDao.add(req.queryParams("content"));
-//            }
-//
-//            data.put("list", list);
-//            return new ModelAndView(data, "index");
-//        }, new ThymeleafTemplateEngine());
-        //kaikki keskustelunavaukset aiheista piittaamatta. Ei välttämättä tarpeen?
         get("/keskustelunavaukset", (req, res) -> {
             HashMap<String, Object> data = new HashMap<>();
 
@@ -106,13 +72,6 @@ public class Main {
             return new ModelAndView(data, "keskustelunavaukset");
         }, new ThymeleafTemplateEngine());
 
-//        Spark.get("/aihealueet/:id", (req, res) -> {
-//            HashMap data = new HashMap<>();
-//            //data.put("aihealueet", aihealueDao.findOne(Integer.parseInt(req.params(":id"))));
-//
-//            return new ModelAndView(data, "keskustelunavaukset");
-//        }, new ThymeleafTemplateEngine());
-        //ei toimi koska keskustelunavausDaon add-metodi vaiheessa (?)
         post("/aihealueet/:id", (req, res) -> {
             keskustelunavausDao.add(req.queryParams("kuvaus"), req.params(":id"));
             res.redirect("/aihealueet/" + req.params(":id"));
