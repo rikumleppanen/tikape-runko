@@ -53,26 +53,18 @@ public class Main {
             return "ok";
         });
 
-        get("/keskustelunavaukset", (req, res) -> {
-            HashMap<String, Object> data = new HashMap<>();
-
-            data.put("avaukset", keskustelunavausDao.findAll());
-
-            return new ModelAndView(data, "keskustelunavaukset");
-        }, new ThymeleafTemplateEngine());
-
         //Listaa keskustelunavaukset aiheittain
         Spark.get("/aihealueet/:id", (req, res) -> {
 
             HashMap<String, Object> data = new HashMap<>();
             data.put("aihe", aihealueDao.findOne(Integer.parseInt(req.params(":id"))).getNimi());
 
-            data.put("avaukset", keskustelunavausDao.findAll(Integer.parseInt(req.params(":id"))));
+            data.put("avaukset", keskustelunavausDao.haeKaikki(Integer.parseInt(req.params(":id"))));
 
             return new ModelAndView(data, "keskustelunavaukset");
         }, new ThymeleafTemplateEngine());
 
-        post("/aihealueet/:id", (req, res) -> {
+        Spark.post("/aihealueet/:id", (req, res) -> {
             keskustelunavausDao.add(req.queryParams("kuvaus"), req.params(":id"));
             res.redirect("/aihealueet/" + req.params(":id"));
             return "ok";

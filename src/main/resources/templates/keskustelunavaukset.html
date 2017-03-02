@@ -9,12 +9,20 @@
     <body>
         <h2>Keskustelunavaukset aiheesta: <span th:text="${aihe}">aihealue</span></h2>
 
-        <ul>        
-            <li th:each="keskustelunavaus : ${avaukset}">
-                 <a th:href="@{~/keskustelu/{id}(id=${keskustelunavaus.id})}" 
-                   th:text="${keskustelunavaus.kuvaus}">kuvaus</a>             
-            </li>
-        </ul>
+
+        <table>
+            <tr>
+                <th>Keskustelunavaus</th>
+                <th>Viestejä yhteensä</th>
+                <th>Tuorein viesti</th>
+            </tr>
+            <tr th:each="keskustelunavaus : ${avaukset}">
+                <td> <a th:href="@{~/keskustelu/{id}(id=${keskustelunavaus.id})}" 
+                   th:text="${keskustelunavaus.kuvaus}">kuvaus</a></td>
+                <td th:text="${keskustelunavaus.lkm}">lkm</td>
+                <td th:text="${keskustelunavaus.time}">aika</td>
+            </tr>
+        </table>
 
         <h3>Lisää uusi keskustelunavaus</h3>
         <form method="POST">
