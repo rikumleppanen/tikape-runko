@@ -24,5 +24,5 @@ Päivä | Tunnit | Henkilö | Kuvaus
 22.2.2017 | 2 | Suvi | tehtyyn perehtymistä, testailua ja keskustelunavausjuttujen lisäilyä
 23.2.2017 | 3 | Suvi | keskustelunavausluokkien muokkaamista, tehtyyn perehtymistä ja html-pohjaa
 1.3.2017 | 1.5 | Suvi | viestin määrän ja aikaleiman yhdistämistä keskustelunavauksiin (jäi kesken)
-2.3.2017 | 2 | Suvi | viestin määrän ja aikaleiman yhdistämistä keskustelunavauksiin + testailua
+2.3.2017 | 2.5 | Suvi | viestin määrän ja aikaleiman yhdistämistä keskustelunavauksiin ja testailua + raportin päivittämistä
 ... | ... | ... | ...
