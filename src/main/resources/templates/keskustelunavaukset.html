@@ -18,8 +18,8 @@
             </tr>
             <tr th:each="keskustelunavaus : ${avaukset}">
                 <td> <a th:href="@{~/keskustelu/{id}(id=${keskustelunavaus.id})}" 
-                   th:text="${keskustelunavaus.kuvaus}">kuvaus</a></td>
-                <td th:text="${keskustelunavaus.lkm}">lkm</td>
+                        th:text="${keskustelunavaus.kuvaus}">kuvaus</a></td>
+                <td th:text="${keskustelunavaus.lkm}" align="center">lkm</td>
                 <td th:text="${keskustelunavaus.time}">aika</td>
             </tr>
         </table>
