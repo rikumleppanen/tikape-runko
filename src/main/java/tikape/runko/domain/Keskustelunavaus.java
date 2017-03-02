@@ -5,14 +5,22 @@ public class Keskustelunavaus {
     private int id;
     private String kuvaus;
     private int aiheID;
+    private Integer lkm;
     private String time;
 
-    //timestamp?
     public Keskustelunavaus(int id, String kuvaus, String time, int aiheID) {
         this.id = id;
         this.kuvaus = kuvaus;
         this.aiheID = aiheID;
         this.time = time;
+        this.lkm = 0;
+    }
+    public Keskustelunavaus(int id, String kuvaus, String time, int lkm, int aiheID) {
+        this.id = id;
+        this.kuvaus = kuvaus;
+        this.aiheID = aiheID;
+        this.time = time;
+        this.lkm = lkm;
     }
 
     public Integer getId() {
@@ -25,6 +33,14 @@ public class Keskustelunavaus {
 
     public void setKuvaus(String kuvaus) {
         this.kuvaus = kuvaus;
+    }
+    
+    public void setLkm(int lkm){
+        this.lkm = lkm;
+    }
+    
+    public int getLkm(){
+        return lkm;
     }
 
     public String getTime() {
