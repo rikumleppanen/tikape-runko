@@ -7,8 +7,7 @@
     </head>
 
     <body>
-        <h2>Keskustelut aihealueen "<span th:text="${alue.nimi}">aihealue</span>" keskustelusta "<span th:text="${keskustelunavaus.kuvaus}">keskustelunavaus</span>"</h2>
-
+        <h2>Keskustelut aihealueen "<a th:href="@{~/aihealueet}" th:text="${alue.nimi}">aihealue</a>" keskustelusta "<a th:href="@{~/aihealueet/{id}(id=${alue.id})}" th:text="${keskustelunavaus.kuvaus}">keskustelunavaus</a>"</h2>
         <ul>        
             <li th:each="viesti : ${viestit}">
                 <span th:text="${viesti.nimimerkki}">nimi</span> (<span th:text="${viesti.time}">aika</span>): <span th:text="${viesti.viesti}">kuvaus</span>               
