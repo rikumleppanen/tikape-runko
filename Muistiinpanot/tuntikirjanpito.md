@@ -10,6 +10,7 @@ Päivä | Tunnit | Henkilö | Kuvaus
 24.2.2017 | 2 | Riku | Aihealueista linkitys Keskustelunavauksiin
 27.2.2017 | 2.5 | Riku | Yhdessä keskustelupalstan Herokuun vienti
 1.3.2017 | 2 | Riku | Aihealueiden viestien ja aikaleimojen listaus
+3.3.2017 | 2 | Riku | Pikku css-viilailuja
 5.2.2017 | 1 | Jaakko | perehtymistä tehtävään
 6.2.2017 | 1 | Jaakko | suunnittelua, tapaaminen
 8.2.2017 | 1.5 | Jaakko | CREATE TABLE:jä
