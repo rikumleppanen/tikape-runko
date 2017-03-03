@@ -32,7 +32,8 @@ public class Main {
         AihealueDao aihealueDao = new AihealueDao(database);
         KeskustelunavausDao keskustelunavausDao = new KeskustelunavausDao(database);
         KeskusteluDao keskusteluDao = new KeskusteluDao(database);
-        List<String> list = new ArrayList<>();
+
+        Spark.staticFileLocation("/templates");
 
         Spark.get("/", (req, res) -> {
             res.redirect("/aihealueet");
@@ -47,7 +48,9 @@ public class Main {
         }, new ThymeleafTemplateEngine());
 
         Spark.post("/aihealueet", (req, res) -> {
-            aihealueDao.lisaa(req.queryParams("aihealue"));
+            if (!req.queryParams("aihealue").isEmpty()) {
+                aihealueDao.lisaa(req.queryParams("aihealue"));
+            }
             res.redirect("/");
             return "ok";
         });
@@ -63,7 +66,9 @@ public class Main {
         }, new ThymeleafTemplateEngine());
 
         Spark.post("/aihealueet/:id", (req, res) -> {
-            keskustelunavausDao.add(req.queryParams("kuvaus"), req.params(":id"));
+            if (!req.queryParams("kuvaus").isEmpty()) {
+                keskustelunavausDao.add(req.queryParams("kuvaus"), req.params(":id"));
+            }
             res.redirect("/aihealueet/" + req.params(":id"));
             return "ok";
         });
@@ -81,7 +86,9 @@ public class Main {
         }, new ThymeleafTemplateEngine());
 
         Spark.post("/keskustelu/:id", (req, res) -> {
-            keskusteluDao.add(req.queryParams("viesti"), req.queryParams("nimimerkki"), req.params(":id"));
+            if (!req.queryParams("viesti").isEmpty()) {
+                keskusteluDao.add(req.queryParams("viesti"), req.queryParams("nimimerkki"), req.params(":id"));
+            }
             res.redirect("/keskustelu/" + req.params(":id"));
             return "ok";
         });
