@@ -17,6 +17,8 @@ Päivä | Tunnit | Henkilö | Kuvaus
 20.2.2017 | 2 | Jaakko | Askel 2 suunnittelua ryhmänä
 21.2.2017 | 1 | Jaakko | Keskustelu ja KeskusteluDao
 26.2.2017 | 3 | Jaakko | Keskustelu toimivaksi (myös html)
+27.2.2017 | 2.5 | Jaakko | Yhdessä keskustelupalstan Herokuun vienti
+1.3.2017 | 1 | Jaakko | onglemien korjausta
 5.2.2017 | 1 | Suvi | perehtymistä ja suunnittelua
 6.2.2017 | 1 | Suvi | suunnittelua + tapaaminen
 9.2.2017 | 1.5 | Suvi | kaavion suunnittelua ja toteutusta
