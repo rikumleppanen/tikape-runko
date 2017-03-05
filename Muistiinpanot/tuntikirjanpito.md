@@ -18,7 +18,7 @@ Päivä | Tunnit | Henkilö | Kuvaus
 21.2.2017 | 1 | Jaakko | Keskustelu ja KeskusteluDao
 26.2.2017 | 3 | Jaakko | Keskustelu toimivaksi (myös html)
 27.2.2017 | 2.5 | Jaakko | Yhdessä keskustelupalstan Herokuun vienti
-1.3.2017 | 1 | Jaakko | onglemien korjausta
+1.3.2017 | 1 | Jaakko | ongelmien korjausta
 2.3.2017 | 1 | Jaakko | CSS
 5.2.2017 | 1 | Suvi | perehtymistä ja suunnittelua
 6.2.2017 | 1 | Suvi | suunnittelua + tapaaminen
@@ -29,4 +29,5 @@ Päivä | Tunnit | Henkilö | Kuvaus
 23.2.2017 | 3 | Suvi | keskustelunavausluokkien muokkaamista, tehtyyn perehtymistä ja html-pohjaa
 1.3.2017 | 1.5 | Suvi | viestin määrän ja aikaleiman yhdistämistä keskustelunavauksiin (jäi kesken)
 2.3.2017 | 2.5 | Suvi | viestin määrän ja aikaleiman yhdistämistä keskustelunavauksiin ja testailua + raportin päivittämistä
+5.3.2017 | 0.5 | Suvi | raportin viimeistelyä ja siistimistä
 ... | ... | ... | ...
