@@ -1,4 +1,4 @@
-# tikape-runko
+# tikape-kurssin 3 hengen tiimin työn tulos
 
-Tietokantojen perusteet -kurssilla tehtävän web-sovelluksen pohja.
+Tietokantojen perusteet -kurssilla tehty web-sovellus.
 
